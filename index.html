@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warehouse Management System</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #FFF2E1, #DAB49D);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #895737;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+    }
+
+    header nav a:hover {
+      color: #FFF2E1;
+      background: #5E3023;
+    }
+
+    .section {
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: #895737;
+      animation: fadeInDown 1s;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-container {
+      margin: 2rem auto;
+      max-width: 600px;
+      padding: 2rem;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s;
+    }
+
+    .form-container label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      font-weight: bold;
+    }
+
+    .form-container input,
+    .form-container select,
+    .form-container textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    .form-container button {
+      background: #895737;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .form-container button:hover {
+      background: #5E3023;
+    }
+
+    .output-container {
+      margin: 2rem auto;
+      max-width: 800px;
+      padding: 2rem;
+      background: #FFF2E1;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .output-container h3 {
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      background: #895737;
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+      border-radius: 20px 20px 0 0;
+    }
+
+    footer a {
+      color: #FFF2E1;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Warehouse Management</h1>
+    <nav>
+      <a href="#inbound">Inbound Shipments</a>
+      <a href="#storage">Storage Optimization</a>
+      <a href="#fulfillment">Order Fulfillment</a>
+      <a href="#returns">Returns</a>
+    </nav>
+  </header>
+
+  <section class="section" id="inbound">
+    <h2>Inbound Shipment Management</h2>
+    <div class="form-container">
+      <h3>Record Inbound Shipment</h3>
+      <label for="shipment-id">Shipment ID</label>
+      <input type="text" id="shipment-id" placeholder="Enter Shipment ID" />
+
+      <label for="supplier-name">Supplier Name</label>
+      <input type="text" id="supplier-name" placeholder="Enter Supplier Name" />
+
+      <label for="item-condition">Item Condition</label>
+      <select id="item-condition">
+        <option value="Good">Good</option>
+        <option value="Damaged">Damaged</option>
+      </select>
+
+      <label for="received-date">Received Date</label>
+      <input type="datetime-local" id="received-date" />
+
+      <button onclick="recordShipment()">Submit</button>
+    </div>
+    <div class="output-container" id="shipment-output"></div>
+  </section>
+
+  <section class="section" id="storage">
+    <h2>Storage Space Optimization</h2>
+    <div class="form-container">
+      <h3>Optimize Storage</h3>
+      <label for="zone-name">Zone Name</label>
+      <input type="text" id="zone-name" placeholder="Enter Zone Name" />
+
+      <label for="current-occupancy">Current Occupancy (%)</label>
+      <input type="number" id="current-occupancy" placeholder="Enter Current Occupancy" />
+
+      <label for="target-occupancy">Target Occupancy (%)</label>
+      <input type="number" id="target-occupancy" placeholder="Enter Target Occupancy" />
+
+      <button onclick="optimizeStorage()">Optimize</button>
+    </div>
+    <div class="output-container" id="storage-output"></div>
+  </section>
+
+  <section class="section" id="fulfillment">
+    <h2>Order Fulfillment</h2>
+    <div class="form-container">
+      <h3>Record Customer Order</h3>
+      <label for="order-id">Order ID</label>
+      <input type="text" id="order-id" placeholder="Enter Order ID" />
+
+      <label for="customer-name">Customer Name</label>
+      <input type="text" id="customer-name" placeholder="Enter Customer Name" />
+
+      <label for="product-name">Product Name</label>
+      <input type="text" id="product-name" placeholder="Enter Product Name" />
+
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" placeholder="Enter Quantity" />
+
+      <button onclick="recordOrder()">Submit</button>
+    </div>
+    <div class="output-container" id="order-output"></div>
+  </section>
+
+  <section class="section" id="returns">
+    <h2>Returns and Exchanges</h2>
+    <div class="form-container">
+      <h3>Record Return/Exchange</h3>
+      <label for="return-id">Return/Exchange ID</label>
+      <input type="text" id="return-id" placeholder="Enter Return/Exchange ID" />
+
+      <label for="customer-name-return">Customer Name</label>
+      <input type="text" id="customer-name-return" placeholder="Enter Customer Name" />
+
+      <label for="reason">Reason for Return/Exchange</label>
+      <textarea id="reason" placeholder="Enter Reason"></textarea>
+
+      <label for="return-date">Return/Exchange Date</label>
+      <input type="datetime-local" id="return-date" />
+
+      <button onclick="recordReturn()">Submit</button>
+    </div>
+    <div class="output-container" id="return-output"></div>
+  </section>
+
+  <footer>
+    <p>© 2025 Warehouse Management | <a href="#hero">Back to Top</a></p>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Load stored shipment data if available
+      const savedShipmentData = localStorage.getItem("shipmentData");
+      if (savedShipmentData) {
+        document.getElementById("shipment-output").innerHTML = savedShipmentData;
+      }
+
+      // Load stored storage optimization data if available
+      const savedStorageData = localStorage.getItem("storageData");
+      if (savedStorageData) {
+        document.getElementById("storage-output").innerHTML = savedStorageData;
+      }
+
+      // Load stored order data if available
+      const savedOrderData = localStorage.getItem("orderData");
+      if (savedOrderData) {
+        document.getElementById("order-output").innerHTML = savedOrderData;
+      }
+
+      // Load stored return data if available
+      const savedReturnData = localStorage.getItem("returnData");
+      if (savedReturnData) {
+        document.getElementById("return-output").innerHTML = savedReturnData;
+      }
+    });
+
+    function recordShipment() {
+      const shipmentId = document.getElementById("shipment-id").value;
+      const supplierName = document.getElementById("supplier-name").value;
+      const itemCondition = document.getElementById("item-condition").value;
+      const receivedDate = document.getElementById("received-date").value;
+
+      const output = `
+        <h3>Inbound Shipment Recorded</h3>
+        <p><strong>Shipment ID:</strong> ${shipmentId}</p>
+        <p><strong>Supplier Name:</strong> ${supplierName}</p>
+        <p><strong>Item Condition:</strong> ${itemCondition}</p>
+        <p><strong>Received Date:</strong> ${new Date(receivedDate).toLocaleString()}</p>
+      `;
+
+      const outputContainer = document.getElementById("shipment-output");
+      outputContainer.innerHTML = output;
+      localStorage.setItem("shipmentData", output);
+    }
+
+    function optimizeStorage() {
+      const zoneName = document.getElementById("zone-name").value;
+      const currentOccupancy = document.getElementById("current-occupancy").value;
+      const targetOccupancy = document.getElementById("target-occupancy").value;
+
+      const output = `
+        <h3>Storage Optimization Results</h3>
+        <p><strong>Zone Name:</strong> ${zoneName}</p>
+        <p><strong>Current Occupancy:</strong> ${currentOccupancy}%</p>
+        <p><strong>Target Occupancy:</strong> ${targetOccupancy}%</p>
+        <p><strong>Action:</strong> Reorganize inventory to achieve the target occupancy.</p>
+      `;
+
+      const outputContainer = document.getElementById("storage-output");
+      outputContainer.innerHTML = output;
+      localStorage.setItem("storageData", output);
+    }
+
+    function recordOrder() {
+      const orderId = document.getElementById("order-id").value;
+      const customerName = document.getElementById("customer-name").value;
+      const productName = document.getElementById("product-name").value;
+      const quantity = document.getElementById("quantity").value;
+
+      const output = `
+        <h3>Customer Order Recorded</h3>
+        <p><strong>Order ID:</strong> ${orderId}</p>
+        <p><strong>Customer Name:</strong> ${customerName}</p>
+        <p><strong>Product Name:</strong> ${productName}</p>
+        <p><strong>Quantity:</strong> ${quantity}</p>
+      `;
+
+      const outputContainer = document.getElementById("order-output");
+      outputContainer.innerHTML = output;
+      localStorage.setItem("orderData", output);
+    }
+
+    function recordReturn() {
+      const returnId = document.getElementById("return-id").value;
+      const customerName = document.getElementById("customer-name-return").value;
+      const reason = document.getElementById("reason").value;
+      const returnDate = document.getElementById("return-date").value;
+
+      const output = `
+        <h3>Return/Exchange Recorded</h3>
+        <p><strong>Return/Exchange ID:</strong> ${returnId}</p>
+        <p><strong>Customer Name:</strong> ${customerName}</p>
+        <p><strong>Reason:</strong> ${reason}</p>
+        <p><strong>Return/Exchange Date:</strong> ${new Date(returnDate).toLocaleString()}</p>
+      `;
+
+      const outputContainer = document.getElementById("return-output");
+      outputContainer.innerHTML = output;
+      localStorage.setItem("returnData", output);
+    }
+  </script>
+</body>
+</html>
